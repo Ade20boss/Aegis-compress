@@ -33,7 +33,7 @@ A robust, pure Python implementation of the **Huffman Coding algorithm**. This p
 You can use the `display_code` function to get the final binary string for any input text.
 
 ```python
-from main import display_code, generate_code
+from huffman_encoding import display_code, generate_code
 
 text = "hello world"
 
