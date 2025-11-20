@@ -66,14 +66,6 @@ The algorithm proceeds in four distinct stages:
 
 ---
 
-📂 Project Structure
-.
-├── main.py           # Core implementation containing all logic
-├── README.md         # Project documentation
-└── tests/            # (Optional) Unit tests
-
----
-
 🛡️ Credits
 Created: "Forged in aegis"
 Author: Adeoluwa Daniel Ademoye
