@@ -62,7 +62,7 @@ The algorithm proceeds in four distinct stages:
 
 - 0 to the lighter (lower frequency) branch.
 
-- generate_code: Walks from the root to each leaf node to compile the final binary sequence for each character.
+- generate_code: Walks from the leaf node to the root to compile the final binary sequence for each character.
 
 ---
 
