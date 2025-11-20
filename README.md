@@ -21,7 +21,7 @@ A robust, pure Python implementation of the **Huffman Coding algorithm**. This p
 ### Installation
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/Ade20boss/Aegis-compress.git](https://github.com/Ade20boss/Aegis-compress.git)
+    git clone https://github.com/Ade20boss/Aegis-compress.git
     ```
 2.  Navigate to the directory:
     ```bash
@@ -45,6 +45,7 @@ print(f"Mapping: {mapping}")
 # 2. Get the full encoded binary string
 binary_string = display_code(text)
 print(f"Encoded: {binary_string}")
+```
 
 ---
 
