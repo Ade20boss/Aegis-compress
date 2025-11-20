@@ -148,31 +148,6 @@ def assign_pos(user_string):
     return tree
 
 
-def find_node_in_tree(node, tree):
-    """
-    Searches for the given node within a hierarchical tree structure and returns
-    the matching dictionary if found.
-
-    This function iterates over a list of dictionary structures, where each
-    dictionary contains a single key-value pair. The key is expected to be a
-    tuple, with the target node name as its first element. The function stops
-    and returns the matching dictionary when the node name matches the target.
-
-    :param node: The target node to search for within the tree.
-    :type node: Any
-    :param tree: The hierarchical structure containing a list of dictionaries
-                 to search in.
-    :type tree: list[dict]
-    :return: The dictionary containing the target node, or None if not found.
-    :rtype: dict | None
-    """
-    for dictionary in tree:
-        key = list(dictionary.keys())[0]
-        # Check if the first element of the key tuple (the name) matches the target
-        if key[0] == node:
-            return dictionary
-
-
 def generate_code(word):
     # Get the tree with assigned 0s and 1s
     tree = assign_pos(word)
