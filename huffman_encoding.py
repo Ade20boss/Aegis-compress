@@ -174,65 +174,50 @@ def find_node_in_tree(node, tree):
 
 
 def generate_code(word):
-    """
-    Generates a dictionary of binary codes for each unique character in the given
-    input string by traversing a pre-constructed tree of binary assignments.
-    This function assumes the existence of support functionality like tree construction
-    and node traversal methods.
-
-    :param word: A string input for which unique characters' binary codes are to
-        be generated
-    :type word: str
-    :return: A dictionary where keys are unique characters from the input string,
-        and values are their corresponding binary codes as strings
-    :rtype: dict
-    """
     # Get the tree with assigned 0s and 1s
     tree = assign_pos(word)
 
     codes = {}
-    chars = set(word)  # Get unique characters to generate codes for
+    chars = set(word)  # Get unique characters
 
     for ch in chars:
         code_bits = ""
-        # Start traversal from the Root (the last element added to the nodes list)
-        current_node = tree[-1]
+        search_target = ch # We start looking for the character itself
 
+        # Loop to climb up the tree from Child -> Parent -> Grandparent
         while True:
-            key = list(current_node.keys())[0]
-            left, right = current_node[key]
+            found = False
+            # Search every node in the tree to see who "owns" the search_target
+            for node in tree:
+                # node structure: {('parent0', 2): [['d', 1, '1'], ['h', 1, '0']]}
+                parent_key = list(node.keys())[0] # e.g., ('parent0', 2)
+                children = node[parent_key]      # e.g., [['d',...], ['h',...]]
 
-            # --- Check Left Child ---
-            # If left child is the character we are looking for
-            if ch == left[0]:
-                code_bits += left[2]  # Append the bit (0 or 1)
+                left = children[0]
+                right = children[1]
+
+                # 1. Is the target in the Left child?
+                if left[0] == search_target:
+                    code_bits += left[2]         # Add the bit (e.g., '1')
+                    search_target = parent_key[0] # Now we look for the parent (e.g., 'parent0')
+                    found = True
+                    break
+
+                # 2. Is the target in the Right child?
+                elif right[0] == search_target:
+                    code_bits += right[2]         # Add the bit
+                    search_target = parent_key[0] # Now we look for the parent
+                    found = True
+                    break
+
+            # If we didn't find a parent, we must be at the Root. Stop.
+            if not found:
                 break
 
-            # --- Check Right Child ---
-            # If right child is the character we are looking for
-            if ch == right[0]:
-                code_bits += right[2]  # Append the bit (0 or 1)
-                break
-
-            # --- Traverse Deeper ---
-            # If the left child is a 'parent' node, follow it down
-            if left[0].startswith("parent"):
-                code_bits += left[2]  # Append path bit
-                current_node = find_node_in_tree(left[0], tree)  # Move current context to that node
-                continue
-
-            # If the right child is a 'parent' node, follow it down
-            if right[0].startswith("parent"):
-                code_bits += right[2]  # Append path bit
-                current_node = find_node_in_tree(right[0], tree)  # Move current context to that node
-                continue
-
-            break  # Safety break if path is lost
-
-        codes[ch] = code_bits
+        # Since we climbed from Bottom -> Top, the bits are backwards. Reverse them.
+        codes[ch] = code_bits[::-1]
 
     return codes
-
 
 def find_indexes(word, letter):
     """
